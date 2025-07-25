@@ -1,15 +1,7 @@
 import asyncio
-import random
-import string
-from telethon import TelegramClient, functions, types, events
-from telethon.tl.functions.account import UpdateProfileRequest
-from telethon.tl.functions.channels import CreateChannelRequest, DeleteChannelRequest
-from telethon.tl.functions.account import UpdateUsernameRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest, CheckChatInviteRequest
-from telethon.errors.rpcerrorlist import UsernameNotOccupiedError
-from itertools import cycle
+from aiohttp import web
+from telethon import TelegramClient, events
 from telethon.tl.functions.messages import GetHistoryRequest
-
 
 api_id = 26056141
 api_hash = '33a38c574c7934ef996294401e2b10b0'
@@ -18,7 +10,7 @@ default_reply = "Привет! слова-тригер:\nпрайс\nинфо\n�
 special_keywords = {
     "прайс": "прайс находиться в https://t.me/pricvseniki",
     "инфо": "я кодер",
-    "жди докс": "пошел нахуй"
+    "жди докс": "пошел нахуй сын свиньи<3"
 }
 
 client = TelegramClient('session', api_id, api_hash)
@@ -58,9 +50,22 @@ async def handler(event):
     else:
         print(f"Сообщение от @{sender.username or sender.first_name}")
 
+async def handle(request):
+    return web.Response(text="Bot is running!")
+
+async def start_web_server():
+    app = web.Application()
+    app.add_routes([web.get('/', handle)])
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', 8000)
+    await site.start()
+
 async def main():
     await client.start()
-    print("Ага")
+    print("Бот запущен!")
+    await start_web_server()  # запускаем веб-сервер для Render
     await client.run_until_disconnected()
 
-asyncio.run(main())
+if __name__ == '__main__':
+    asyncio.run(main())
