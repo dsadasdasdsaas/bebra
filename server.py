@@ -3,8 +3,14 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 valid_keys = {
-    "ABC123": None,
-    "XYZ789": None
+    "A9F3J7K2": None,
+    "B8L5M1Q9": None,
+    "X7Z2V4C8": None,
+    "M6N9P0S3": None,
+    "Q4R8T1W5": None,
+    "D3G7H9J0": None,
+    "V1X6Z2B4": None,
+    "K5L8N3F7": None
 }
 
 @app.route("/api/verify", methods=["POST"])
@@ -31,4 +37,5 @@ def home():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
 
