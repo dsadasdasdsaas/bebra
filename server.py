@@ -23,6 +23,12 @@ def verify_key():
         return jsonify({"status": "ok"}), 200
     else:
         return jsonify({"status": "denied"}), 403
+        
+@app.route("/", methods=["GET"])
+def home():
+    return "Server is running", 200
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
